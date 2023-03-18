@@ -73,15 +73,15 @@ runs:
           const { ECR_REPO_TAG, GHCR_REPO_TAG } = process.env
           
           let tags = []
-          if (core.getInput('ecr-enabled') == "true") {
+          if (ECR_REPO_TAG.trim() != "") {
             tags.push(ECR_REPO_TAG)
           }
           
-          if (core.getInput('ghcr-enabled') == "true") {
+          if (GHCR_REPO_TAG.trim() != "") {
             tags.push(GHCR_REPO_TAG)
           }
           
-          return tags
+          return tags.join(',')
 
     - name: "Build and push"
       id: docker_build
