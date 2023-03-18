@@ -61,31 +61,33 @@ runs:
         result-encoding: string
         script: return 'ghcr.io/${{ github.repository }}:${{ inputs.docker-tag }}'.toLowerCase()
 
-    - name: "Collect tags"
-      uses: actions/github-script@v6
-      id: repo_slug
-      env:
-        ECR_REPO_TAG: "${{ inputs.ecr-enabled == 'true' && steps.ecr_repo_slug.outputs.result || '' }}"
-        GHCR_REPO_TAG: "${{ inputs.ghcr-enabled == 'true' && steps.ghcr_repo_slug.outputs.result || '' }}"
-      with:
-        result-encoding: json
-        script: |
-          const { ECR_REPO_TAG, GHCR_REPO_TAG } = process.env
-          
-          let tags = []
-          if (ECR_REPO_TAG.trim() != "") {
-            tags.push(ECR_REPO_TAG)
-          }
-          
-          if (GHCR_REPO_TAG.trim() != "") {
-            tags.push(GHCR_REPO_TAG)
-          }
-          
-          return tags.join("\n")
+#    - name: "Collect tags"
+#      uses: actions/github-script@v6
+#      id: repo_slug
+#      env:
+#        ECR_REPO_TAG: "${{ inputs.ecr-enabled == 'true' && steps.ecr_repo_slug.outputs.result || '' }}"
+#        GHCR_REPO_TAG: "${{ inputs.ghcr-enabled == 'true' && steps.ghcr_repo_slug.outputs.result || '' }}"
+#      with:
+#        result-encoding: json
+#        script: |
+#          const { ECR_REPO_TAG, GHCR_REPO_TAG } = process.env
+#
+#          let tags = []
+#          if (ECR_REPO_TAG.trim() != "") {
+#            tags.push(ECR_REPO_TAG)
+#          }
+#
+#          if (GHCR_REPO_TAG.trim() != "") {
+#            tags.push(GHCR_REPO_TAG)
+#          }
+#
+#          return tags.join("\n")
 
     - name: "Build and push"
       id: docker_build
       uses: docker/build-push-action@v4
       with:
         push: true
-        tags: "${{ steps.repo_slug.outputs.result }}"
+        tags: |
+          ${{ inputs.ecr-enabled == 'true' && steps.ecr_repo_slug.outputs.result || '#' }}
+          ${{ inputs.ghcr-enabled == 'true' && steps.ghcr_repo_slug.outputs.result || '#' }}
