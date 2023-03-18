@@ -81,7 +81,7 @@ runs:
             tags.push(GHCR_REPO_TAG)
           }
           
-          return tags.join('\n')
+          return tags.join("\n")
 
     - name: "Build and push"
       id: docker_build
