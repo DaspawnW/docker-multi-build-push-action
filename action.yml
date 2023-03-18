@@ -70,7 +70,6 @@ runs:
       with:
         result-encoding: json
         script: |
-          const core = require('@actions/core');
           const { ECR_REPO_TAG, GHCR_REPO_TAG } = process.env
           
           let tags = []
