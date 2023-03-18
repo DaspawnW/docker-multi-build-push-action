@@ -2,19 +2,19 @@
 
 Inputs:
 
-| Name               | Required               | Descrption                          |
-|--------------------|------------------------|-------------------------------------|
-| docker-tag         | true                   | Docker tag to push                  |
-| ghcr-enabled       | true                   | Enable or disable GHCR push         |
-| ecr-enabled        | true                   | Enable or disable public ECR push   |
-| ecr-role-to-assume | if ecr.enabled == true | Role to assume for public ecr push  |
-| ecr-repository-url | if ecr.enabled == true | ECR Repository URI                  |
-
+| Name               | Required                | Descrption                         |
+|--------------------|-------------------------|------------------------------------|
+| docker-tag         | true                    | Docker tag to push                 |
+| ghcr-enabled       | true                    | Enable or disable GHCR push        |
+| ghcr-token         | if ghcr-enabled == true | Sets the GITHUB_TOKEN secret       |
+| ecr-enabled        | true                    | Enable or disable public ECR push  |
+| ecr-role-to-assume | if ecr-enabled == true  | Role to assume for public ecr push |
+| ecr-repository-url | if ecr.enabled == true  | ECR Repository URI                 |
 
 Example:
 
 ```yaml
-on: [push]
+on: [ push ]
 
 jobs:
   hello_world_job:
@@ -27,6 +27,7 @@ jobs:
         with:
           docker-tag: "latest"
           ghcr-enabled: "true"
+          ghcr-token: "${{ secrets.GITHUB_TOKEN }}"
           ecr-enabled: "true"
           ecr-role-to-assume: "arn:aws:iam::123456789012:role/assumed-role-for-push"
           ecr-repository-url: "public.ecr.aws/daspawnw/vault-crd"

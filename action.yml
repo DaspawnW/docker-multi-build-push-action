@@ -18,6 +18,9 @@ inputs:
   ghcr-enabled:
     description: 'Enable or disable publishing to ghcr'
     required: true
+  ghcr-token:
+    description: 'Token to authenticate to ghcr'
+    required: false
 
 outputs: { }
 runs:
@@ -49,7 +52,7 @@ runs:
       with:
         registry: ghcr.io
         username: "${{ github.actor }}"
-        password: "${{ secrets.GITHUB_TOKEN }}"
+        password: "${{ inputs.ghcr-token }}"
     - name: "[GHCR] - Build Image name"
       uses: actions/github-script@v6
       if: inputs.ghcr-enabled == 'true'
