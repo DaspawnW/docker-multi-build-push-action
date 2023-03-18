@@ -88,4 +88,4 @@ runs:
       uses: docker/build-push-action@v4
       with:
         push: true
-        tags: ${{ steps.repo_slug.outputs.result }}
+        tags: steps.repo_slug.outputs.result
