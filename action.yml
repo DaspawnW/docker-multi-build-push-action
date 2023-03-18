@@ -81,11 +81,11 @@ runs:
             tags.push(GHCR_REPO_TAG)
           }
           
-          return tags.join(',')
+          return tags
 
     - name: "Build and push"
       id: docker_build
       uses: docker/build-push-action@v4
       with:
         push: true
-        tags: "${{ steps.repo_slug.outputs.result }}"
+        tags: ${{ steps.repo_slug.outputs.result }}
