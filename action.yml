@@ -51,8 +51,8 @@ runs:
       if: inputs.ghcr-enabled == 'true'
       with:
         registry: ghcr.io
-        username: "${{ github.actor }}"
-        password: "${{ inputs.ghcr-token }}"
+        username: ${{ github.actor }}
+        password: ${{ inputs.ghcr-token }}
     - name: "[GHCR] - Build Image name"
       uses: actions/github-script@v6
       if: inputs.ghcr-enabled == 'true'
