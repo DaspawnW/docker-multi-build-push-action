@@ -64,16 +64,22 @@ runs:
     - name: "Collect tags"
       uses: actions/github-script@v6
       id: repo_slug
+      env:
+        ECR_REPO_TAG: "${{ inputs.ecr-enabled == 'true' && steps.ecr_repo_slug.outputs.result || '' }}"
+        GHCR_REPO_TAG: "${{ inputs.ghcr-enabled == 'true' && steps.ghcr_repo_slug.outputs.result || '' }}"
       with:
         result-encoding: json
         script: |
+          const core = require('@actions/core');
+          const { ECR_REPO_TAG, GHCR_REPO_TAG } = process.env
+          
           let tags = []
-          if (inputs.ecr-enabled == "true") {
-            tags.push(steps.ecr_repo_slug.outputs.result)
+          if (core.getInput('ecr-enabled') == "true") {
+            tags.push(ECR_REPO_TAG)
           }
           
-          if (inputs.ghcr-enabled == "true") {
-            tags.push(steps.ghcr_repo_slug.outputs.result)
+          if (core.getInput('ghcr-enabled') == "true") {
+            tags.push(GHCR_REPO_TAG)
           }
           
           return tags
