@@ -20,10 +20,17 @@ jobs:
   hello_world_job:
     runs-on: ubuntu-latest
     name: A job to say hello
+    permissions:
+      id-token: write # required for public ecr auth
+      contents: read  # required for checkout
+      packages: write # required for ghcr push
     steps:
       - uses: actions/checkout@v3
-      - id: foo
-        uses: daspawnw/docker-multi-build-push-action@master
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1    
+    
+      - uses: daspawnw/docker-multi-build-push-action@master
         with:
           docker-tag: "latest"
           ghcr-enabled: "true"
