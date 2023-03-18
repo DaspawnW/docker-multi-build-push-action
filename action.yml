@@ -67,5 +67,5 @@ runs:
       with:
         push: true
         tags: |
-          ${{ inputs.ecr-enabled == 'true' && steps.ecr_repo_slug.outputs.result || '#' }}
-          ${{ inputs.ghcr-enabled == 'true' && steps.ghcr_repo_slug.outputs.result || '#' }}
+          ${{ inputs.ecr-enabled == 'true' && steps.ecr_repo_slug.outputs.result || '' }}
+          ${{ inputs.ghcr-enabled == 'true' && steps.ghcr_repo_slug.outputs.result || '' }}
