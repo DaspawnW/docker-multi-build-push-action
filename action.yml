@@ -4,6 +4,11 @@ inputs:
   docker-tag:
     description: 'Tag to build and push'
     required: true
+  
+  platforms:
+    description: 'Supported platforms for multiarch builds using buildx'
+    required: false
+    default: 'linux/amd64'
 
   ecr-enabled:
     description: 'Enable or disable publishing to public ecr'
@@ -66,6 +71,7 @@ runs:
       uses: docker/build-push-action@v4
       with:
         push: true
+        platforms: ${{ inputs.platforms }}
         tags: |
           ${{ inputs.ecr-enabled == 'true' && steps.ecr_repo_slug.outputs.result || '' }}
           ${{ inputs.ghcr-enabled == 'true' && steps.ghcr_repo_slug.outputs.result || '' }}

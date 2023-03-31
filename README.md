@@ -2,14 +2,15 @@
 
 Inputs:
 
-| Name               | Required                | Descrption                         |
-|--------------------|-------------------------|------------------------------------|
-| docker-tag         | true                    | Docker tag to push                 |
-| ghcr-enabled       | true                    | Enable or disable GHCR push        |
-| ghcr-token         | if ghcr-enabled == true | Sets the GITHUB_TOKEN secret       |
-| ecr-enabled        | true                    | Enable or disable public ECR push  |
-| ecr-role-to-assume | if ecr-enabled == true  | Role to assume for public ecr push |
-| ecr-repository-url | if ecr.enabled == true  | ECR Repository URI                 |
+| Name               | Required                | Descrption                                                     |
+|--------------------|-------------------------|----------------------------------------------------------------|
+| docker-tag         | true                    | Docker tag to push                                             |
+| platforms          | false                   | Supported platforms for multiarch (defaults to `linux/amd64`)  |
+| ghcr-enabled       | true                    | Enable or disable GHCR push                                    |
+| ghcr-token         | if ghcr-enabled == true | Sets the GITHUB_TOKEN secret                                   |
+| ecr-enabled        | true                    | Enable or disable public ECR push                              |
+| ecr-role-to-assume | if ecr-enabled == true  | Role to assume for public ecr push                             |
+| ecr-repository-url | if ecr.enabled == true  | ECR Repository URI                                             |
 
 Example:
 
