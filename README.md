@@ -7,6 +7,7 @@ Inputs:
 | docker-tag         | true                    | Docker tag to push                                            |
 | platforms          | false                   | Supported platforms for multiarch (defaults to `linux/amd64`) |
 | file               | false                   | Path to the Dockerfile. (default `Dockerfile`)                |
+| context            | false                   | Docker build context (default `.`)                            |
 | ghcr-enabled       | true                    | Enable or disable GHCR push                                   |
 | ghcr-token         | if ghcr-enabled == true | Sets the GITHUB_TOKEN secret                                  |
 | ecr-enabled        | true                    | Enable or disable public ECR push                             |
@@ -30,8 +31,8 @@ jobs:
       - uses: actions/checkout@v3
 
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1    
-    
+        uses: docker/setup-buildx-action@v1
+
       - uses: daspawnw/docker-multi-build-push-action@master
         with:
           docker-tag: "latest"

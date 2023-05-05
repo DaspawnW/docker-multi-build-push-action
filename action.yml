@@ -14,6 +14,10 @@ inputs:
     description: 'Path to the Dockerfile. (default Dockerfile)'
     required: false
     default: Dockerfile
+  context:
+    description: 'Docker build context'
+    required: false
+    default: "."
 
   ecr-enabled:
     description: 'Enable or disable publishing to public ecr'
@@ -76,6 +80,7 @@ runs:
       uses: docker/build-push-action@v4
       with:
         push: true
+        context: ${{ inputs.context }}
         platforms: ${{ inputs.platforms }}
         file: ${{ inputs.file }}
         tags: |
