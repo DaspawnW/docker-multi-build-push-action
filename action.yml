@@ -10,6 +10,11 @@ inputs:
     required: false
     default: 'linux/amd64'
 
+  file:
+    description: 'Path to the Dockerfile. (default Dockerfile)'
+    required: false
+    default: Dockerfile
+
   ecr-enabled:
     description: 'Enable or disable publishing to public ecr'
     required: true
@@ -72,6 +77,7 @@ runs:
       with:
         push: true
         platforms: ${{ inputs.platforms }}
+        file: ${{ inputs.file }}
         tags: |
           ${{ inputs.ecr-enabled == 'true' && steps.ecr_repo_slug.outputs.result || '' }}
           ${{ inputs.ghcr-enabled == 'true' && steps.ghcr_repo_slug.outputs.result || '' }}
